@@ -28,6 +28,7 @@ public class User implements Serializable{
     private String email;
     private String phone;
     private Integer isRealName;
+    private Double amount;
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)

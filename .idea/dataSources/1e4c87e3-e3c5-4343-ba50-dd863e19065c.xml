@@ -1460,37 +1460,42 @@ permission_id</ColNames>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <key id="409" parent="309" name="PRIMARY">
+    <column id="409" parent="309" name="amount">
+      <Position>7</Position>
+      <Comment>用户余额</Comment>
+      <DataType>double|0s</DataType>
+    </column>
+    <key id="410" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="410" parent="310" name="role_id">
+    <column id="411" parent="310" name="role_id">
       <Position>1</Position>
       <Comment>角色ID</Comment>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="411" parent="310" name="user_id">
+    <column id="412" parent="310" name="user_id">
       <Position>2</Position>
       <Comment>权限ID</Comment>
       <DataType>varchar(40)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="412" parent="310" name="FK74qx7rkbtq2wqms78gljv87a1">
+    <index id="413" parent="310" name="FK74qx7rkbtq2wqms78gljv87a1">
       <ColNames>role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="413" parent="310" name="FKee9dk0vg99shvsytflym6egx1">
+    <index id="414" parent="310" name="FKee9dk0vg99shvsytflym6egx1">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="414" parent="310" name="fk-rid">
+    <foreign-key id="415" parent="310" name="fk-rid">
       <ColNames>role_id</ColNames>
       <RefTableName>pe_role</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="415" parent="310" name="fk-uid">
+    <foreign-key id="416" parent="310" name="fk-uid">
       <ColNames>user_id</ColNames>
       <RefTableName>pe_user</RefTableName>
       <RefColNames>id</RefColNames>
