@@ -1,0 +1,17 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: rental-user #指定服务名
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rental-user?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+  jpa:
+    database: MySQL
+    show-sql: true
+    open-in-view: true
+  redis:
+    host: localhost
+    port: 6379

@@ -1,0 +1,66 @@
+{
+  "groups": [
+    {
+      "name": "",
+      "type": "com.healer.alipay.config.AlipayConfig",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app-id",
+      "type": "java.lang.String",
+      "description": "应用ID,您的APPID，收款账号既是您的APPID对应支付宝账号",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "charset",
+      "type": "java.lang.String",
+      "description": "字符编码格式",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "gateway-url",
+      "type": "java.lang.String",
+      "description": "支付宝网关",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "log-path",
+      "type": "java.lang.String",
+      "description": "支付宝网关",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "notify-url",
+      "type": "java.lang.String",
+      "description": "服务器异步通知页面路径需http:\/\/格式的完整路径，不能加?id=123这类自定义参数",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "private-key",
+      "type": "java.lang.String",
+      "description": "商户私钥，您的PKCS8格式RSA2私钥",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "public-key",
+      "type": "java.lang.String",
+      "description": "支付宝公钥,",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "return-url",
+      "type": "java.lang.String",
+      "description": "页面跳转同步通知页面路径 需http:\/\/格式的完整路径，不能加?id=123这类自定义参数",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    },
+    {
+      "name": "sign-type",
+      "type": "java.lang.String",
+      "description": "签名方式",
+      "sourceType": "com.healer.alipay.config.AlipayConfig"
+    }
+  ],
+  "hints": []
+}
