@@ -26,6 +26,33 @@ public class UserService {
         return userDao.findAll();
     }
 
+    /**
+     * 用户余额充值
+     * @param id
+     * @param cash
+     * @return
+     */
+    public User increaseAmount(String id, Double cash){
+        User user = userDao.findById(id).get();
+        user.setAmount(user.getAmount()+cash);
+        return userDao.save(user);
+    }
+
+    /**
+     * 使用用户余额结算账单
+     * @param id
+     * @param cash
+     * @return
+     */
+    public User settleAccounts(String id, Double cash){
+        User user = userDao.findById(id).get();
+        if (user.getAmount() < cash){
+            return null;
+        }
+        user.setAmount(user.getAmount() - cash);
+        return userDao.save(user);
+    }
+
     public User addUser(User user){
 
         String password = user.getPassword();

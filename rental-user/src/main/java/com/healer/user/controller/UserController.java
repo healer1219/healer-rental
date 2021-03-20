@@ -48,6 +48,36 @@ public class UserController {
         return user;
     }
 
+    /**
+     * 用户进行余额充值
+     * @param id
+     * @param cash
+     * @return
+     */
+    @PostMapping("/user/amount")
+    public Result increaseAmount(String id, Double cash){
+        User user = userService.increaseAmount(id, cash);
+        if (user != null){
+            return new Result(ResultCode.SUCCESS, user);
+        }
+        return new Result(ResultCode.FAIL);
+    }
+
+    /**
+     * 用户进行余额结算
+     * @param id
+     * @param cash
+     * @return
+     */
+    @PostMapping("/user/settleAccounts")
+    public Result settleAccounts(String id, Double cash){
+        User user = userService.increaseAmount(id, cash);
+        if (user != null){
+            return new Result(ResultCode.SUCCESS, user);
+        }
+        return new Result(ResultCode.FAIL);
+    }
+
     /**添加
      *
      * @return
