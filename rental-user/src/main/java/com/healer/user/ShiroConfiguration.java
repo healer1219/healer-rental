@@ -85,7 +85,7 @@ public class ShiroConfiguration {
         //使用过滤器的形式配置请求地址的依赖权限
         //filterMap.put("/user/home","perms[user-home]");
         //filterMap.put("/user/home","roles[系统管理员]");//如果不具备指定的权限，跳转到setUnauthorizedUrl设定的地址
-
+        filterMap.put("/user/settleAccounts","anon");
         filterMap.put("/user/register","anon");
         filterMap.put("/user/realName/**","anon");
         //当前请求地址必须认证之后才可以访问
