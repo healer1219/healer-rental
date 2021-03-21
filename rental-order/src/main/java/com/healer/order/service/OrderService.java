@@ -5,6 +5,7 @@ import com.healer.entity.cart.CartItem;
 import com.healer.entity.order.Order;
 import com.healer.order.dao.OrderDao;
 import com.healer.order.feign.ItemFeignClient;
+import com.healer.order.feign.UserFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,10 +35,13 @@ public class OrderService {
     private OrderDao orderDao;
 
     @Autowired
-    private ItemFeignClient feignClient;
+    private ItemFeignClient itemFeignClient;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
 
     public Result getItemByID(String id){
-       return feignClient.getItemById(id);
+       return itemFeignClient.getItemById(id);
     }
 
     /**
@@ -68,7 +72,10 @@ public class OrderService {
             order.setCreateTime(new Timestamp(System.currentTimeMillis()));
             order.setStatus(0);
             order.setOrderNo(getOrderNo());
-            feignClient.updateItemStatus(order.getItemId().toString());
+            //使用feign调用item生成订单
+            itemFeignClient.updateItemStatus(order.getItemId().toString());
+            //使用feign调用user中的余额结算，将order中所带的用户id以及订单金额传入
+            userFeignClient.settleAccounts(order.getUserId(), order.getOrderAmount());
 
             return orderDao.save(order);
         }
@@ -100,7 +107,7 @@ public class OrderService {
         newOrder.setStatus(order.getStatus());
         newOrder.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         if (newOrder.getStatus() == 2){
-            feignClient.updateItemStatus(newOrder.getItemId().toString());
+            itemFeignClient.updateItemStatus(newOrder.getItemId().toString());
         }
         return orderDao.save(newOrder);
     }
