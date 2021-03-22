@@ -30,11 +30,7 @@ public class OrderApi {
 
     @PostMapping("/addOrder")
     public Result addOrder(@RequestBody Order order){
-        Order addOrder = orderService.addOrder(order);
-        if (addOrder != null){
-            return new Result(ResultCode.SUCCESS,addOrder);
-        }
-        return new Result(ResultCode.FAIL);
+        return orderService.addOrder(order);
     }
 
     @GetMapping("/all/{userId}")

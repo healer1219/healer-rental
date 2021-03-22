@@ -71,7 +71,7 @@ public class UserController {
      */
     @PostMapping("/user/settleAccounts")
     public Result settleAccounts(String id, Double cash){
-        User user = userService.increaseAmount(id, cash);
+        User user = userService.settleAccounts(id, cash);
         if (user != null){
             return new Result(ResultCode.SUCCESS, user);
         }

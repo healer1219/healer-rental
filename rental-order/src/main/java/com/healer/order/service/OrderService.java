@@ -1,6 +1,7 @@
 package com.healer.order.service;
 
 import com.healer.common.entity.Result;
+import com.healer.common.entity.ResultCode;
 import com.healer.entity.cart.CartItem;
 import com.healer.entity.order.Order;
 import com.healer.order.dao.OrderDao;
@@ -65,7 +66,7 @@ public class OrderService {
      * @param order
      * @return
      */
-    public Order addOrder(Order order){
+    public Result addOrder(Order order){
         //判断用户是否有未完成订单
         if (orderDao.findByUserIdAndStatus(order.getUserId(), 0) == null &&
                 orderDao.findByUserIdAndStatus(order.getUserId(), 1) == null){
@@ -75,11 +76,14 @@ public class OrderService {
             //使用feign调用item生成订单
             itemFeignClient.updateItemStatus(order.getItemId().toString());
             //使用feign调用user中的余额结算，将order中所带的用户id以及订单金额传入
-            userFeignClient.settleAccounts(order.getUserId(), order.getOrderAmount());
-
-            return orderDao.save(order);
+            Result result = userFeignClient.settleAccounts(order.getUserId(), order.getOrderAmount());
+            if (result.isSuccess()){
+                return new Result(ResultCode.SUCCESS, orderDao.save(order));
+            }else {
+                return new Result(ResultCode.FAIL,"账户余额不足");
+            }
         }
-        return null;
+        return new Result(ResultCode.FAIL, "有未完成订单");
 
     }
 

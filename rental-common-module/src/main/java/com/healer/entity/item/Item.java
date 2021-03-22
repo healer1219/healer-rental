@@ -21,6 +21,7 @@ public class Item implements Serializable {
   private String num;
   private String carId;
   private Integer status;
+  private Double price;
 
   @OneToOne(targetEntity = ItemDesc.class)
   @JoinColumn(name = "desc_id")
