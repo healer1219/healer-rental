@@ -102,6 +102,20 @@ public class OrderService {
     }
 
     /**
+     * 根据用户拿到用户当前正在进行中的订单
+     * @param userId
+     * @return
+     */
+    public Result getUserOrderByUserId(String userId){
+        List<Order> orderByUserId = getOrderByUserId(userId);
+        for (Order order : orderByUserId) {
+            if (order.getStatus() == 1){
+                return new Result(ResultCode.SUCCESS,order);
+            }
+        }
+        return new Result(ResultCode.FAIL,"当前用户没有正在进行中的订单");
+    }
+    /**
      * 改变订单状态   0为未交付 1为已交付 2为已还车
      * @param order
      * @return

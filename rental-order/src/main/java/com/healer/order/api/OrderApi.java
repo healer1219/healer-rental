@@ -16,6 +16,7 @@ import java.util.List;
  * @time 2021/3/3 20:24
  * @Description TODO
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/order")
 public class OrderApi {
@@ -31,6 +32,16 @@ public class OrderApi {
     @PostMapping("/addOrder")
     public Result addOrder(@RequestBody Order order){
         return orderService.addOrder(order);
+    }
+
+    /**
+     * 拿到当前用户正在进行中的id
+     * @param id
+     * @return
+     */
+    @GetMapping("/userOrder/{id}")
+    public Result getUserOrderByUserId(@PathVariable("id") String id){
+        return orderService.getUserOrderByUserId(id);
     }
 
     @GetMapping("/all/{userId}")

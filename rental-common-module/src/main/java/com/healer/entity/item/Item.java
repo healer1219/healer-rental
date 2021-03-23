@@ -22,6 +22,10 @@ public class Item implements Serializable {
   private String carId;
   private Integer status;
   private Double price;
+  @Column(name = "address_x")
+  private String addressX;
+  @Column(name = "address_y")
+  private String addressY;
 
   @OneToOne(targetEntity = ItemDesc.class)
   @JoinColumn(name = "desc_id")
