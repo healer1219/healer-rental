@@ -109,7 +109,7 @@ public class OrderService {
     public Result getUserOrderByUserId(String userId){
         List<Order> orderByUserId = getOrderByUserId(userId);
         for (Order order : orderByUserId) {
-            if (order.getStatus() == 1){
+            if (order.getStatus() == 1 || order.getStatus() == 0){
                 return new Result(ResultCode.SUCCESS,order);
             }
         }
@@ -122,7 +122,11 @@ public class OrderService {
      */
     public Order changeOrderStatus(Order order){
         Order newOrder = orderDao.findById(order.getId()).get();
-        newOrder.setStatus(order.getStatus());
+        if (order.getStatus().equals(0)){
+            newOrder.setStatus(1);
+        }else if (order.getStatus().equals(1)){
+            newOrder.setStatus(2);
+        }
         newOrder.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         if (newOrder.getStatus() == 2){
             itemFeignClient.updateItemStatus(newOrder.getItemId().toString());

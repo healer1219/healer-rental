@@ -2,8 +2,10 @@ package com.healer.user.service;
 
 import com.alibaba.fastjson.JSON;
 import com.healer.common.utils.HttpUtils;
+import com.healer.user.dao.UserDao;
 import com.healer.user.domain.DriverLicense;
 import com.healer.user.domain.RealName;
+import com.healer.user.domain.User;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -29,12 +31,15 @@ public class RealNameService {
     @Autowired
     private HttpUtils httpUtils;
 
+    @Autowired
+    private UserDao userDao;
+
 
     private static final String url = "https://mobile3elements.shumaidata.com/mobile/verify_real_name";
     private static final String appCode = "21aecf4ced69411888be2f9f711e8fd6";
 
 
-    public  RealName isRealName(String name, String phone, String num) throws IOException {
+    public  RealName isRealName(String name, String phone, String num, String userId) throws IOException {
 //        String url = "https://mobile3elements.shumaidata.com/mobile/verify_real_name";
 //        String appCode = "21aecf4ced69411888be2f9f711e8fd6";
         Map<String,String> params = new HashMap<>();
@@ -44,7 +49,13 @@ public class RealNameService {
         String result =  postForm(appCode,url,params);
         //获取到结果转化为对象
         RealName realName = JSON.parseObject(result,RealName.class);
-
+        if (realName.getCode() != "20004"){
+            User user = userDao.findById(userId).get();
+            if (user.getIsRealName() != 1){
+                user.setIsRealName(1);
+                userDao.save(user);
+            }
+        }
         System.out.println(realName.toString());
 
         return realName;

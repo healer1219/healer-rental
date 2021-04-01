@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface CarInfoDao extends JpaRepository<CarInfo, Integer>, JpaSpecificationExecutor<CarInfo> {
     List<CarInfo> findAllByBrandId(String brandId);
+    CarInfo findByNameLike(String name);
 }

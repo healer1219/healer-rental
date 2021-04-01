@@ -46,8 +46,8 @@ public class RealNameController {
     }
 
     @PostMapping ("/isRealName")
-    public RealName idRealName(String userName, String phone, String num) throws IOException {
-        return realNameService.isRealName(userName, phone, num);
+    public RealName idRealName(String userName, String phone, String num, String userId) throws IOException {
+        return realNameService.isRealName(userName, phone, num, userId);
     }
 
     /**

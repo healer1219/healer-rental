@@ -45,4 +45,8 @@ public class CarInfo implements Serializable {
      * 车辆图片
      */
     private String image;
+    /**
+     * 用于统计车型点击率
+     */
+    private Integer count;
 }

@@ -31,6 +31,11 @@ public class CarInfoApi {
         return new Result(ResultCode.SUCCESS, carInfos);
     }
 
+    @GetMapping("/carInfo/like")
+    public Result findByNameLike(String carName){
+        return carInfoService.getCarInfoByNameLike("%"+carName+"%");
+    }
+
     @GetMapping("/carInfo/single/{id}")
     public Result findById( @PathVariable("id") String id){
         CarInfo carInfoById = carInfoService.getCarInfoById(Integer.valueOf(id));
@@ -56,5 +61,31 @@ public class CarInfoApi {
             return new Result(ResultCode.FAIL);
         }
         return new Result(ResultCode.SUCCESS, carInfos);
+    }
+
+    /**
+     * 选出当前品牌最受欢迎车型
+     * @param bid
+     * @return
+     */
+    @GetMapping("/carInfo/popular/{id}")
+    public Result findMostPopularCarByBid(@PathVariable("id") String bid){
+        CarInfo carInfo = carInfoService.findMostPopularByBrandId(bid);
+        if (carInfo != null){
+            return new Result(ResultCode.SUCCESS, carInfo);
+        }
+        return new Result(ResultCode.FAIL);
+    }
+
+    /**
+     * 选出全部最受欢迎车型
+     */
+    @GetMapping("/carInfo/popular")
+    public Result findMostPopularCar(){
+        CarInfo carInfo = carInfoService.findMostPopularCar();
+        if (carInfo != null){
+            return new Result(ResultCode.SUCCESS, carInfo);
+        }
+        return new Result(ResultCode.FAIL);
     }
 }
