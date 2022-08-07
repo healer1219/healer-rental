@@ -3,7 +3,9 @@ package com.healer.entity.carinfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
+import javax.persistence.Access;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,6 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "brand_info")
 @Data
+@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Brand implements Serializable {

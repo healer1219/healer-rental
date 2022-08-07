@@ -1,10 +1,11 @@
 package com.healer.common.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.function.Consumer;
 
 /**
  * 数据响应对象
@@ -19,13 +20,14 @@ import lombok.NoArgsConstructor;
  *    }
  */
 @Data
+@Accessors(fluent = true, chain = true)
 @NoArgsConstructor
-public class Result {
+public class Result<T> {
 
     private boolean success;//是否成功
-    private Integer code;// 返回码
+    private Integer code;//返回码
     private String message;//返回信息
-    private Object data;// 返回数据
+    private T data;//返回数据
 
     public Result(ResultCode code) {
         this.success = code.success;
@@ -33,7 +35,7 @@ public class Result {
         this.message = code.message;
     }
 
-    public Result(ResultCode code,Object data) {
+    public Result(ResultCode code,T data) {
         this.success = code.success;
         this.code = code.code;
         this.message = code.message;
@@ -47,15 +49,44 @@ public class Result {
     }
 
 
-    public static Result SUCCESS(){
-        return new Result(ResultCode.SUCCESS);
+
+    public static <T> Result<T> success(T data) {
+        return new Result<>(ResultCode.SUCCESS, data);
     }
 
-    public static Result ERROR(){
-        return new Result(ResultCode.SERVER_ERROR);
+    public static <T> Result<T> fail(T data) {
+        return new Result<>(ResultCode.FAIL, data);
     }
 
-    public static Result FAIL(){
-        return new Result(ResultCode.FAIL);
+    public static <T> Result<T> fail(String message) {
+        return new Result<>(ResultCode.FAIL.code(), message, false);
+    }
+
+
+    public static <T> Result<T> SUCCESS(){
+        return new Result<>(ResultCode.SUCCESS);
+    }
+
+    public static  <T> Result<T> ERROR(){
+        return new Result<>(ResultCode.SERVER_ERROR);
+    }
+
+    public static <T> Result<T> FAIL(){
+        return new Result<>(ResultCode.FAIL);
+    }
+
+    public void ifSuccess() {
+
+    }
+
+    public boolean checkSuccess() {
+        return Boolean.TRUE.equals(this.success);
+    }
+
+
+    public void ifSuccess(Consumer<? super T> action) {
+        if (success) {
+            action.accept(data);
+        }
     }
 }

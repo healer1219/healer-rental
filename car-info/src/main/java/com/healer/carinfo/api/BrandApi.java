@@ -4,6 +4,8 @@ import com.healer.carinfo.service.BrandService;
 import com.healer.common.entity.Result;
 import com.healer.common.entity.ResultCode;
 import com.healer.entity.carinfo.Brand;
+import com.healer.mapstruct.BrandMapper;
+import com.healer.vo.BrandVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +24,18 @@ public class BrandApi {
     private BrandService brandService;
 
     @PostMapping("")
-    public Result addBrand(@RequestBody Brand brand){
-        Brand add = brandService.add(brand);
-        return new Result(ResultCode.SUCCESS, add);
+    public Result<BrandVo> addBrand(@RequestBody BrandVo brandVo){
+        try {
+            Brand result = brandService.add(brandVo);
+            return null == result ?
+                    Result.FAIL() :
+                    Result.success(
+                            BrandMapper.mapper.convert(result)
+                    );
+        } catch (Exception e) {
+            return Result.FAIL();
+        }
+
     }
 
     @GetMapping("")
